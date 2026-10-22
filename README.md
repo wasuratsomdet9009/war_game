@@ -28,4 +28,8 @@ git pull
 | `.gitattributes` | บังคับ line ending แบบ LF ให้สคริปต์ทำงานได้บน Mac |
 | `.gitignore` | ไม่บันทึกไฟล์ที่เครื่องสร้างขึ้นเอง เช่น `.DS_Store`, build output |
 
-เอนจินและโครงสร้างโค้ดของเกมยังไม่ได้เลือก จะกำหนดตามแผนการทำเกม
+| `docs/design/` | สเปกต้นฉบับของผู้ออกแบบ (Master Prompt v3.1) |
+| `docs/gdd/` | Game Design Document ที่ส่งเป็นรอบ — เริ่มอ่านที่ [docs/gdd/README.md](docs/gdd/README.md) |
+| `docs/adr/` | Architecture Decision Records เช่น [ADR-0001 Tech Stack](docs/adr/ADR-0001-tech-stack.md) |
+
+ตอนนี้อยู่ในขั้นออกแบบ (ยังไม่เขียนโค้ดเกม) เอนจินจะเลือกตาม ADR-0001 และผล Technical Spike
