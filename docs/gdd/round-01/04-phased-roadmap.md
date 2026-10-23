@@ -413,7 +413,7 @@ Faction AI และ Commander AI, การทูต, เศรษฐกิจ�
 | โมดูล | งานในระยะนี้ |
 |---|---|
 | 1 | Tile ทั้งจังหวัด, DEM จากแหล่งที่อนุญาต, Heuristics เติมข้อมูลที่ขาด, ตาราง OSM Tag → Gameplay ชุดหลัก |
-| 2 | Tick ระดับภูมิภาคและระดับโลกทำงานจริง, Simulation LOD เต็มรูปแบบ, เหตุการณ์พื้นฐาน, History seed จากที่ตั้งเดิมใน OSM (ค่ายทหาร สถานีตำรวจ ศาลากลาง ตาม 2.2 Phase 0), **Forecast Service** แบบจำลองย่อ |
+| 2 | Tick ระดับภูมิภาคและระดับโลกทำงานจริง, Simulation LOD เต็มรูปแบบ, เหตุการณ์พื้นฐาน, History seed จากที่ตั้งเดิมใน OSM (ค่ายทหาร สถานีตำรวจ ศาลากลาง ตาม 2.2 Phase 0) และจำลอง Phase 1–2 แบบย่อในจังหวัดเดียวเพื่อให้เริ่มเกมที่ Phase 2 ได้ (รอบที่ 2: [บทที่ 2](../chapters/02-world-lore-national-fracture.md) D2-08), **Forecast Service** แบบจำลองย่อ |
 | 3 | Faction AI 5 กลุ่ม (Utility AI + เป้าหมายระยะสั้น/กลาง/ยาว) และ Commander AI ระดับกองร้อย–กองพัน |
 | 4 | Pops Tier C พร้อม Tag ที่มา การสนับสนุนของประชาชน การย้ายถิ่นพื้นฐาน |
 | 5 | ตัวแปรความสัมพันธ์ 10 ตัว (14) การหยุดยิง การค้า ความชอบธรรมพื้นฐาน |
@@ -654,6 +654,8 @@ Faction AI และ Commander AI, การทูต, เศรษฐกิจ�
 | 33 | Visual Style & Color Token System | **T** S1/S4: Shader นีออน | **①** Token ชุดแรก + เข้ารหัสซ้อน | **◐** Token ครบ, โหมด Neon / APP-6 / Signal-CB, High Contrast, ปรับแสงเรือง | **◐** ทดสอบกับผู้บอดสีจริง, ชุดย่อย Tritan ถ้าจำเป็น, ปรับรายสีเอง, ขัดเกลา, เสียง UI | **■** F1 | ระยะ 0 → F1 |
 | 34 | Platform Layer — macOS / Metal / Apple Silicon | **T** S6 + Build ARM64/Metal | **①** Build + Sign + Notarize, Perf Bench | **◐** ตรวจการเปิดเกมจาก git clone (E2), Memory Pressure, Steamworks ตาม ADR-0002 | **◐** โหมดพลังงาน/ความร้อน, 120 fps | **■** F1 แจกผ่าน git (หรือ Steam ถ้าผู้ออกแบบยืนยันตาม 104) | ระยะ 0 → F1 |
 
+**หมายเหตุ (รอบที่ 2):** คำว่า "ข้ามแดน" หรือ "ข้ามชาติ" ในคอลัมน์ F2 ของแถว 4, 6, 7 และ 23 หมายถึงการไหลเต็มรูปแบบระหว่างพื้นที่ Ring 0 หลายประเทศ ส่วนการไหลแบบสรุปผ่านตัวแสดงภายนอกและจุดผ่านแดน (ผู้ลี้ภัย การค้า ทหารรับจ้างต่างชาติ) เริ่ม MVP → VS → F1 ตาม[บทที่ 2 หัวข้อ 2.4](../chapters/02-world-lore-national-fracture.md) (D2-23)
+
 ### 8.1 ระบบที่ไม่มีเลขโมดูลของตัวเองในหัวข้อ 103 และโมดูลที่รับผิดชอบ
 
 เหตุผลที่ต้องระบุ: ถ้าไม่ผูกกับโมดูลใด งานเหล่านี้จะหลุดจากแผน
@@ -663,9 +665,9 @@ Faction AI และ Commander AI, การทูต, เศรษฐกิจ�
 | Command API (15.3, 29.3) | 12 UI & Command System | Prototype |
 | Query API ภายใต้ Fog of War (Knowledge View) | 22 Intelligence เป็นเจ้าของ (อ่านจาก Snapshot ที่ 2 Global Simulation เผยแพร่) ตาม [02 หัวข้อ 8](02-system-map.md) | Prototype |
 | Forecast Service (93.4, `forecast` ใน 30.2) | 2 Global Simulation | MVP |
-| History Generation (2.2) | 2 Global Simulation + 14 Personnel | MVP (seed) → VS (เต็ม) |
+| History Generation (2.2) | 2 Global Simulation (ผู้จัดลำดับ) + โมดูลเจ้าของข้อมูล (14 Personnel รับ PlaceHistory และ Chronicle) | MVP (seed: Phase 0–2 จังหวัดเดียว) → VS (เต็มในภูมิภาค Phase 0–3) → F1 (ทั้งประเทศ Phase 0–4) ตาม[บทที่ 2](../chapters/02-world-lore-national-fracture.md) หัวข้อ 2.1.10 |
 | Dynamic World Events (78) | 2 Global Simulation | MVP |
-| การสำรวจและอ้างสิทธิ์พื้นที่ (5.2–5.3) | 2 + 17 + 22 | MVP |
+| การสำรวจและอ้างสิทธิ์พื้นที่ (5.2–5.3) | การสำรวจ: 1 + 22 (POI Registry: 17) · การอ้างสิทธิ์: 5 + 25 + 17 (จุดยึดจาก 18, 16) ตาม[บทที่ 3](../chapters/03-open-world-unclaimed-land.md) D2 (รอบที่ 2) | MVP |
 | สถานะการควบคุมทางการเมือง (19) | 5 Diplomacy & Governance | MVP |
 | Battlefield Zones / Zone of Control (17) | 25 Echelon Resolution & Handoff เป็นเจ้าของ Zone Field แนวหน้า และทะเบียนการรบ (02 D4) คำนวณจากข้อมูลของ 8/15 (กำลังที่ประจำและรัศมี HQ), 16 (Command Coverage), 7 (การเชื่อมเส้นส่งกำลัง), 4/5 (การสนับสนุนของประชาชน) และ 22 (ภัยคุกคามที่รู้) · กติกาเขียนในบทที่ 8 ของ GDD | Prototype (2 สถานะ) → MVP (ครบ 7 เขต) |
 | Unit AI (12, 15.2) | 8 Military & Tactical Combat | Prototype |
